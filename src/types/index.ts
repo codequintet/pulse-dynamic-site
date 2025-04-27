@@ -1,6 +1,6 @@
 
 export interface Project {
-  id: number;
+  id: string;
   title: string;
   description: string;
   image: string;
@@ -9,7 +9,7 @@ export interface Project {
 }
 
 export interface Publication {
-  id: number;
+  id: string;
   title: string;
   authors: string;
   journal: string;
@@ -19,7 +19,7 @@ export interface Publication {
 }
 
 export interface TeamMember {
-  id: number;
+  id: string;
   name: string;
   role: string;
   bio: string;
@@ -30,7 +30,7 @@ export interface TeamMember {
 }
 
 export interface Event {
-  id: number;
+  id: string;
   title: string;
   date: string;
   time: string;
