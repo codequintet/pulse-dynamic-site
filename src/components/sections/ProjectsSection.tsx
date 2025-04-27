@@ -1,72 +1,38 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useFirebaseData } from "@/hooks/useFirebaseData";
+import { projectsCollection } from "@/lib/firebase";
 
-// Sample data for projects
-const projectsData = [
-  {
-    id: 1,
-    title: "AI-Driven Climate Prediction",
-    description: "Using machine learning algorithms to improve climate change prediction models and enhance understanding of global warming patterns.",
-    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742",
-    categories: ["AI", "Climate", "Data Science"],
-    link: "#"
-  },
-  {
-    id: 2,
-    title: "Quantum Computing Applications",
-    description: "Exploring novel applications of quantum computing in solving complex optimization problems in various scientific domains.",
-    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5",
-    categories: ["Quantum", "Computing", "Physics"],
-    link: "#"
-  },
-  {
-    id: 3,
-    title: "Neural Interface Systems",
-    description: "Developing brain-computer interfaces that allow direct communication between the human brain and external devices.",
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
-    categories: ["Neuroscience", "Hardware", "AI"],
-    link: "#"
-  },
-  {
-    id: 4,
-    title: "Sustainable Energy Solutions",
-    description: "Researching innovative approaches to renewable energy generation, storage, and distribution.",
-    image: "https://images.unsplash.com/photo-1473091534298-04dcbce3278c",
-    categories: ["Energy", "Sustainability", "Engineering"],
-    link: "#"
-  },
-  {
-    id: 5,
-    title: "Blockchain for Scientific Data",
-    description: "Implementing blockchain technology to ensure integrity and transparency in scientific research data.",
-    image: "https://images.unsplash.com/photo-1498936178812-4b2e558d2937",
-    categories: ["Blockchain", "Data", "Security"],
-    link: "#"
-  },
-  {
-    id: 6,
-    title: "Robotics in Healthcare",
-    description: "Designing robotic systems to assist in medical procedures and healthcare delivery in remote areas.",
-    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
-    categories: ["Robotics", "Healthcare", "Engineering"],
-    link: "#"
-  },
-];
-
-// Extract unique categories from project data
-const allCategories = Array.from(
-  new Set(projectsData.flatMap(project => project.categories))
-);
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  categories: string[];
+  link: string;
+}
 
 const ProjectsSection = () => {
   const [activeFilter, setActiveFilter] = useState<string>("All");
-  
+  const { data: projects, loading, error } = useFirebaseData<Project>(projectsCollection);
+
+  if (loading) {
+    return <div className="text-center py-10">Loading projects...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-10 text-red-500">Error loading projects: {error.message}</div>;
+  }
+
+  const allCategories = Array.from(
+    new Set(projects.flatMap(project => project.categories))
+  );
+
   const filteredProjects = activeFilter === "All"
-    ? projectsData
-    : projectsData.filter(project => project.categories.includes(activeFilter));
+    ? projects
+    : projects.filter(project => project.categories.includes(activeFilter));
   
   return (
     <section id="projects" className="section-padding bg-muted">
