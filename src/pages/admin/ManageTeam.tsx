@@ -10,6 +10,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import type { TeamMember } from '@/types';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { trash } from 'lucide-react';
 
 const ManageTeam = () => {
   const { data: teamMembers, loading, error } = useFirebaseData<TeamMember>(studentsCollection);
@@ -186,35 +188,52 @@ const ManageTeam = () => {
       </form>
 
       {/* Team Members List */}
-      <div className="grid gap-4 md:grid-cols-2">
-        {teamMembers.map((member) => (
-          <div key={member.id} className="p-4 border rounded-lg flex justify-between items-start">
-            <div className="flex gap-4">
-              {member.image && (
-                <div className="h-16 w-16 rounded-full overflow-hidden">
-                  <img 
-                    src={member.image} 
-                    alt={member.name} 
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              )}
-              <div>
-                <h3 className="font-semibold">{member.name}</h3>
-                <p className="text-sm text-gray-600">{member.role}</p>
-                <p className="text-xs text-gray-500">{member.email}</p>
-              </div>
-            </div>
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={() => handleDelete(member.id)}
-            >
-              Delete
-            </Button>
-          </div>
-        ))}
-      </div>
+      <h3 className="text-xl font-semibold">Current Team Members</h3>
+      {teamMembers.length === 0 ? (
+        <p>No team members found</p>
+      ) : (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Image</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {teamMembers.map((member) => (
+              <TableRow key={member.id}>
+                <TableCell>
+                  {member.image && (
+                    <div className="h-12 w-12 rounded-full overflow-hidden">
+                      <img 
+                        src={member.image} 
+                        alt={member.name} 
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  )}
+                </TableCell>
+                <TableCell className="font-medium">{member.name}</TableCell>
+                <TableCell>{member.role}</TableCell>
+                <TableCell>{member.email}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => handleDelete(member.id)}
+                  >
+                    <trash className="h-4 w-4" />
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </div>
   );
 };
