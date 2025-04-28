@@ -141,7 +141,7 @@ const ManageTeam = () => {
             placeholder="Biography"
             value={formData.bio}
             onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-            required
+          
           />
         </div>
         
@@ -151,7 +151,7 @@ const ManageTeam = () => {
             placeholder="Email"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            required
+            
           />
         </div>
         
@@ -161,7 +161,7 @@ const ManageTeam = () => {
             placeholder="Number of Publications"
             value={formData.publications}
             onChange={(e) => setFormData({ ...formData, publications: e.target.value })}
-            required
+            
           />
         </div>
         
