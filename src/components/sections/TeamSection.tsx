@@ -24,14 +24,15 @@ const TeamSection = () => {
         <Tabs defaultValue="faculty" onValueChange={setActiveTab} className="w-full">
           <div className="flex justify-center mb-8">
             <TabsList className="grid w-full max-w-md grid-cols-3">
-              <TabsTrigger value="faculty" className="flex items-center justify-center">
-                Faculty
-              </TabsTrigger>
+              
               <TabsTrigger value="researchers" className="flex items-center justify-center">
                 Researchers
               </TabsTrigger>
               <TabsTrigger value="students" className="flex items-center justify-center">
                 Students
+              </TabsTrigger>
+              <TabsTrigger value="faculty" className="flex items-center justify-center">
+                Intern
               </TabsTrigger>
             </TabsList>
           </div>
@@ -39,9 +40,9 @@ const TeamSection = () => {
           {/* Faculty Tab */}
           <TabsContent value="faculty">
             {facultyLoading ? (
-              <div className="text-center py-10">Loading faculty...</div>
+              <div className="text-center py-10">Loading Intern...</div>
             ) : facultyData.length === 0 ? (
-              <div className="text-center py-10">No faculty members found</div>
+              <div className="text-center py-10">No Intern found</div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {facultyData.map((member) => (
