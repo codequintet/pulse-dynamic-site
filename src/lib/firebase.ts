@@ -23,6 +23,8 @@ export const storage = getStorage(app);
 
 // Collection references
 export const studentsCollection = 'students';
+export const facultyCollection = 'faculty';
+export const researchersCollection = 'researchers';
 export const publicationsCollection = 'publications';
 export const projectsCollection = 'projects';
 export const eventsCollection = 'events';
