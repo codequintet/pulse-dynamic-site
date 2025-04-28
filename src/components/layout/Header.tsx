@@ -14,7 +14,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
       <div className="container-custom flex justify-between items-center py-4">
         <div className="flex items-center">
-          <a href="/" className="text-2xl font-bold text-primary">ResearchLab</a>
+          <a href="/" className="text-2xl font-bold text-primary">Gaurav's Portfolio</a>
         </div>
         
         {/* Desktop Navigation */}

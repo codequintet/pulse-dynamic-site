@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Section */}
           <div>
-            <h3 className="text-xl font-bold mb-4">ResearchLab</h3>
+            <h3 className="text-xl font-bold mb-4">Gaurav's Portfolio</h3>
             <p className="mb-4 text-sm">
               Leading the way in innovative research and academic excellence. Our mission is to advance knowledge
               through collaborative and cutting-edge research.
@@ -48,30 +48,12 @@ const Footer = () => {
             </ul>
           </div>
           
-          {/* Newsletter */}
-          <div>
-            <h3 className="text-xl font-bold mb-4">Newsletter</h3>
-            <p className="mb-4 text-sm">Subscribe to our newsletter for updates.</p>
-            <form className="flex flex-col space-y-2">
-              <input 
-                type="email" 
-                placeholder="Your email" 
-                className="px-4 py-2 text-gray-800 rounded-md"
-                required
-              />
-              <button 
-                type="submit"
-                className="bg-accent text-primary-foreground font-bold py-2 px-4 rounded-md hover:bg-opacity-90 transition-colors"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
+  
         </div>
         
         {/* Bottom Bar */}
         <div className="border-t border-blue-800 mt-8 pt-6 text-sm text-center">
-          <p>© {currentYear} ResearchLab. All rights reserved.</p>
+          <p>© {currentYear} Gaurav's Portfolio. All rights reserved.</p>
         </div>
       </div>
     </footer>
