@@ -104,15 +104,7 @@ const ContactSection = () => {
             </div>
 
             {/* Map */}
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold mb-4">Visit Us</h3>
-              <div className="aspect-video bg-gray-200 rounded-md overflow-hidden">
-                {/* Placeholder for Google Map - In a real implementation, you would use an iframe with Google Maps or similar */}
-                <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                  <p className="text-gray-500">Interactive Map Would Be Here</p>
-                </div>
-              </div>
-            </div>
+            
           </div>
 
           {/* Contact Form */}
