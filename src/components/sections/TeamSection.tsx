@@ -120,11 +120,7 @@ const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
             <span>{member.publications} Publications</span>
           </div>
           
-          <div className="mt-4">
-            <Button variant="outline" size="sm" asChild className="w-full">
-              <a href={member.website}>View Profile</a>
-            </Button>
-          </div>
+          
         </div>
       </CardContent>
     </Card>
