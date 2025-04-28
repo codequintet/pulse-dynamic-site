@@ -98,27 +98,18 @@ const EventsSection = () => {
   );
 };
 
-interface Event {
-  id: string;
-  title: string;
-  date: string;
-  time: string;
-  location: string;
-  description: string;
-  type: string;
-  registrationLink?: string;
-  recordingLink?: string;
+// Remove the local Event interface definition since we're importing it from types
+interface EventCardProps {
+  event: Event;
+  formatDate: (date: string) => string;
+  isPast: boolean;
 }
 
 const EventCard = ({ 
   event, 
   formatDate, 
   isPast 
-}: { 
-  event: Event; 
-  formatDate: (date: string) => string;
-  isPast: boolean;
-}) => {
+}: EventCardProps) => {
   return (
     <Card className="overflow-hidden hover:shadow-md transition-all">
       <CardHeader>
