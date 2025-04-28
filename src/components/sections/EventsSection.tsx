@@ -34,7 +34,7 @@ const EventsSection = () => {
   return (
     <section id="events" className="section-padding">
       <div className="container-custom">
-        <h2 className="section-heading text-center">Events</h2>
+        <h2 className="section-heading text-center">Internships And Events</h2>
         <p className="section-subheading text-center">
           Stay updated on our conferences, workshops, seminars, and lectures
         </p>

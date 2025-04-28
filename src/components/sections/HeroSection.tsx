@@ -27,23 +27,23 @@ const HeroSection = () => {
       <div className="container-custom min-h-[70vh] flex flex-col justify-center py-20 relative z-10">
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-            Advancing Research<br />
-            <span className="text-accent">Through Innovation</span>
+            Dr. Gaurav Varshney<br />
+            <span className="text-accent">Assistant Professor, CSE, IIT Jammu | Programme Director, PG Diploma in Cyber Security</span>
           </h1>
           
           <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl">
-            Pioneering research in computer science, artificial intelligence, and 
-            interdisciplinary applications. Join our community of scholars, innovators, 
-            and change-makers.
+          Ph.D. & M.Tech (IIT Roorkee) with 10+ years of experience in academia and industry (Qualcomm, NIIT). My work focuses on web/network security, memory forensics, and privacy-preserving tech. I’ve published 25+ research papers and collaborate with global institutes like SUNY Albany and SUTD. Passionate about secure systems, innovation, and education.
           </p>
           
-          <div className="flex flex-wrap gap-4">
-            <Button className="bg-white text-primary hover:bg-accent hover:text-primary-foreground">
-              Explore Our Work
-              <ArrowRight className="ml-2 h-4 w-4" />
+          <div className="flex space-x-4">
+            <Button variant="outline" className="text-white border-white hover:bg-white hover:text-primary transition-colors">
+              <a href="#projects">View Projects</a>
             </Button>
-            <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-primary">
-              Join Our Team
+            <Button variant="default" className="text-white">
+              <a href="#contact" className="flex items-center">
+                Contact Me
+                <ArrowRight className="ml-2" />
+              </a>
             </Button>
           </div>
         </div>

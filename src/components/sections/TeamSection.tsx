@@ -18,7 +18,7 @@ const TeamSection = () => {
       <div className="container-custom">
         <h2 className="section-heading text-center">Our Team</h2>
         <p className="section-subheading text-center">
-          Meet our dedicated faculty, researchers, and students working together on groundbreaking research
+          Meet our dedicated  Researchers, Students and Interns working together on groundbreaking research
         </p>
         
         <Tabs defaultValue="faculty" onValueChange={setActiveTab} className="w-full">
