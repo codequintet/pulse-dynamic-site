@@ -3,95 +3,23 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from 'lucide-react';
-
-// Sample publications data
-const publicationsData = [
-  {
-    id: 1,
-    title: "Machine Learning Approaches to Climate Change Prediction",
-    authors: "Smith, J., Johnson, A., Williams, R.",
-    journal: "Journal of Climate Informatics",
-    year: 2023,
-    link: "#",
-    citationCount: 42
-  },
-  {
-    id: 2,
-    title: "Quantum Computing: Current Status and Future Prospects",
-    authors: "Chen, L., Brown, M., Garcia, P.",
-    journal: "Quantum Information Processing",
-    year: 2022,
-    link: "#",
-    citationCount: 78
-  },
-  {
-    id: 3,
-    title: "Neural Interfaces: A Review of Technologies and Applications",
-    authors: "Taylor, S., Anderson, K., White, T.",
-    journal: "IEEE Transactions on Neural Networks",
-    year: 2023,
-    link: "#",
-    citationCount: 25
-  },
-  {
-    id: 4,
-    title: "Renewable Energy Integration: Challenges and Solutions",
-    authors: "Miller, D., Rodriguez, E., Lee, H.",
-    journal: "Energy Policy Journal",
-    year: 2022,
-    link: "#",
-    citationCount: 63
-  },
-  {
-    id: 5,
-    title: "Blockchain Applications in Scientific Research",
-    authors: "Wilson, P., Clark, N., Davis, S.",
-    journal: "Distributed Ledger Technology",
-    year: 2021,
-    link: "#",
-    citationCount: 37
-  },
-  {
-    id: 6,
-    title: "Advanced Robotics in Surgical Procedures",
-    authors: "Robinson, C., Thompson, J., Walker, M.",
-    journal: "Journal of Medical Robotics",
-    year: 2023,
-    link: "#",
-    citationCount: 29
-  },
-  {
-    id: 7,
-    title: "AI Ethics: Ensuring Responsible Innovation",
-    authors: "Adams, T., Martinez, R., King, S.",
-    journal: "AI & Society",
-    year: 2022,
-    link: "#",
-    citationCount: 54
-  },
-  {
-    id: 8,
-    title: "Data Security in Cloud Computing Environments",
-    authors: "Lewis, F., Hall, A., Young, B.",
-    journal: "Journal of Cybersecurity",
-    year: 2021,
-    link: "#",
-    citationCount: 41
-  }
-];
+import { useFirebaseData } from '@/hooks/useFirebaseData';
+import { publicationsCollection } from '@/lib/firebase';
+import type { Publication } from '@/types';
 
 const PublicationsSection = () => {
+  const { data: publications, loading, error } = useFirebaseData<Publication>(publicationsCollection);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("year");
   const [sortOrder, setSortOrder] = useState("desc");
   
   // Filter publications based on search term
-  const filteredPublications = publicationsData.filter(pub => 
+  const filteredPublications = publications?.filter(pub => 
     pub.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
     pub.authors.toLowerCase().includes(searchTerm.toLowerCase()) ||
     pub.journal.toLowerCase().includes(searchTerm.toLowerCase()) ||
     pub.year.toString().includes(searchTerm)
-  );
+  ) || [];
   
   // Sort publications based on selected criteria
   const sortedPublications = [...filteredPublications].sort((a, b) => {
@@ -106,11 +34,9 @@ const PublicationsSection = () => {
       return sortOrderMultiplier * a.title.localeCompare(b.title);
     }
   });
-  
-  // Toggle sort order
-  const toggleSortOrder = () => {
-    setSortOrder(prev => prev === "asc" ? "desc" : "asc");
-  };
+
+  if (loading) return <div className="text-center py-10">Loading publications...</div>;
+  if (error) return <div className="text-center py-10">Error: {error.message}</div>;
   
   return (
     <section id="publications" className="section-padding">
@@ -150,7 +76,7 @@ const PublicationsSection = () => {
             <Button
               variant="outline"
               size="icon"
-              onClick={toggleSortOrder}
+              onClick={() => setSortOrder(prev => prev === "asc" ? "desc" : "asc")}
               className="w-10 h-10"
             >
               {sortOrder === "asc" ? "↑" : "↓"}
@@ -198,11 +124,6 @@ const PublicationsSection = () => {
               <p className="text-muted-foreground">No publications found matching your search.</p>
             </div>
           )}
-        </div>
-        
-        {/* View All Button */}
-        <div className="mt-10 text-center">
-          <Button size="lg">Browse All Publications</Button>
         </div>
       </div>
     </section>
