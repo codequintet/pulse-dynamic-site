@@ -1,8 +1,7 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search } from 'lucide-react';
+import { Search, ExternalLink } from 'lucide-react';
 import { useFirebaseData } from '@/hooks/useFirebaseData';
 import { publicationsCollection } from '@/lib/firebase';
 import type { Publication } from '@/types';
@@ -13,7 +12,6 @@ const PublicationsSection = () => {
   const [sortBy, setSortBy] = useState("year");
   const [sortOrder, setSortOrder] = useState("desc");
   
-  // Filter publications based on search term
   const filteredPublications = publications?.filter(pub => 
     pub.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
     pub.authors.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -21,7 +19,6 @@ const PublicationsSection = () => {
     pub.year.toString().includes(searchTerm)
   ) || [];
   
-  // Sort publications based on selected criteria
   const sortedPublications = [...filteredPublications].sort((a, b) => {
     const sortOrderMultiplier = sortOrder === "asc" ? 1 : -1;
     
@@ -30,7 +27,6 @@ const PublicationsSection = () => {
     } else if (sortBy === "citations") {
       return sortOrderMultiplier * (a.citationCount - b.citationCount);
     } else {
-      // Default to title sort
       return sortOrderMultiplier * a.title.localeCompare(b.title);
     }
   });
@@ -41,12 +37,20 @@ const PublicationsSection = () => {
   return (
     <section id="publications" className="section-padding">
       <div className="container-custom">
-        <h2 className="section-heading text-center">Publications</h2>
-        <p className="section-subheading text-center">
-          Our research team publishes regularly in leading academic journals and conferences
-        </p>
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h2 className="section-heading">Publications</h2>
+            <p className="section-subheading">
+              Our research team publishes regularly in leading academic journals and conferences
+            </p>
+          </div>
+          <Button variant="outline" asChild className="flex items-center gap-2">
+            <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer">
+              Google Scholar <ExternalLink className="h-4 w-4" />
+            </a>
+          </Button>
+        </div>
         
-        {/* Search and Sort Controls */}
         <div className="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="relative w-full md:w-1/2">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
@@ -84,7 +88,6 @@ const PublicationsSection = () => {
           </div>
         </div>
         
-        {/* Publications List */}
         <div className="space-y-6">
           {sortedPublications.length > 0 ? (
             sortedPublications.map(publication => (

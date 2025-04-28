@@ -93,35 +93,29 @@ interface TeamMemberCardProps {
 
 const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
   return (
-    <Card className="overflow-hidden h-full hover:shadow-md transition-all">
-      <div className="relative h-64 overflow-hidden">
-        <img 
-          src={member.image} 
-          alt={member.name}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-          <h3 className="text-white text-xl font-bold">{member.name}</h3>
-          <p className="text-white/80 text-sm">{member.role}</p>
-        </div>
-      </div>
-      <CardContent className="pt-4">
-        <p className="text-muted-foreground mb-4">{member.bio}</p>
-        
-        <div className="flex flex-col space-y-2 text-sm">
-          <div className="flex items-center">
-            <Mail className="h-4 w-4 mr-2 text-primary" />
-            <a href={`mailto:${member.email}`} className="hover:text-primary">
-              {member.email}
-            </a>
+    <Card className="border border-primary/20 hover:border-primary transition-all duration-300">
+      <CardContent className="p-6">
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-xl font-bold text-primary">{member.name}</h3>
+            <p className="text-muted-foreground">{member.role}</p>
           </div>
           
-          <div className="flex items-center">
-            <FileText className="h-4 w-4 mr-2 text-primary" />
-            <span>{member.publications} Publications</span>
+          <p className="text-sm text-muted-foreground">{member.bio}</p>
+          
+          <div className="flex flex-col space-y-2 text-sm">
+            <div className="flex items-center">
+              <Mail className="h-4 w-4 mr-2 text-primary" />
+              <a href={`mailto:${member.email}`} className="hover:text-primary transition-colors">
+                {member.email}
+              </a>
+            </div>
+            
+            <div className="flex items-center">
+              <FileText className="h-4 w-4 mr-2 text-primary" />
+              <span>{member.publications} Publications</span>
+            </div>
           </div>
-          
-          
         </div>
       </CardContent>
     </Card>
