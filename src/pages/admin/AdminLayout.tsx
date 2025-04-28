@@ -1,9 +1,10 @@
+
 import { Outlet } from 'react-router-dom';
 import { SidebarProvider, Sidebar, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useNavigate } from 'react-router-dom';
-import { FileText, User, Calendar, FolderOpen } from 'lucide-react';
+import { FileText, User, Calendar, FolderOpen, MessageSquare } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const AdminLayout = () => {
@@ -49,6 +50,14 @@ const AdminLayout = () => {
                   <div className="flex items-center">
                     <Calendar className="mr-2" />
                     <span>Events</span>
+                  </div>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild onClick={() => navigate('/admin/messages')}>
+                  <div className="flex items-center">
+                    <MessageSquare className="mr-2" />
+                    <span>Messages</span>
                   </div>
                 </SidebarMenuButton>
               </SidebarMenuItem>
