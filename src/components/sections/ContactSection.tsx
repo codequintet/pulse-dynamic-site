@@ -1,19 +1,9 @@
-<<<<<<< HEAD
 import { useState } from "react";
-=======
-import { useState } from 'react';
->>>>>>> c6b922937ca28a47dae2f7b5c7844b9e2d378bf8
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-<<<<<<< HEAD
 import { Mail, MapPin, Phone } from "lucide-react";
-=======
-import { Mail, MapPin, Phone } from 'lucide-react';
-import { db } from '@/lib/firebase';
-import { collection, addDoc } from 'firebase/firestore';
->>>>>>> c6b922937ca28a47dae2f7b5c7844b9e2d378bf8
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -36,7 +26,6 @@ const ContactSection = () => {
       [name]: value,
     }));
   };
-<<<<<<< HEAD
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,20 +33,6 @@ const ContactSection = () => {
 
     // Simulate form submission delay
     setTimeout(() => {
-=======
-  
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      await addDoc(collection(db, 'messages'), {
-        ...formData,
-        timestamp: new Date(),
-        status: 'unread'
-      });
-      
->>>>>>> c6b922937ca28a47dae2f7b5c7844b9e2d378bf8
       toast({
         title: "Message Sent!",
         description: "We'll get back to you as soon as possible.",
@@ -70,19 +45,9 @@ const ContactSection = () => {
         subject: "",
         message: "",
       });
-<<<<<<< HEAD
 
-=======
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
->>>>>>> c6b922937ca28a47dae2f7b5c7844b9e2d378bf8
       setIsSubmitting(false);
-    }
+    }, 1000);
   };
 
   return (
