@@ -1,10 +1,11 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, MapPin, Phone } from 'lucide-react';
+import { db } from '@/lib/firebase';
+import { collection, addDoc } from 'firebase/firestore';
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -28,12 +29,17 @@ const ContactSection = () => {
     }));
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission delay
-    setTimeout(() => {
+    try {
+      await addDoc(collection(db, 'messages'), {
+        ...formData,
+        timestamp: new Date(),
+        status: 'unread'
+      });
+      
       toast({
         title: "Message Sent!",
         description: "We'll get back to you as soon as possible.",
@@ -46,9 +52,15 @@ const ContactSection = () => {
         subject: "",
         message: "",
       });
-      
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
   
   return (

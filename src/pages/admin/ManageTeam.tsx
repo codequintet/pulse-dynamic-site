@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useFirebaseData } from '@/hooks/useFirebaseData';
-import { studentsCollection, facultyCollection, researchersCollection, db, storage } from '@/lib/firebase';
+import { studentsCollection, facultyCollection, researchersCollection, db } from '@/lib/firebase';
 import { collection, addDoc, deleteDoc, doc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -22,20 +21,12 @@ const ManageTeam = () => {
     name: '',
     role: '',
     bio: '',
-    image: '',
     email: '',
     publications: '0',
     website: '',
     type: 'student'
   });
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setImageFile(e.target.files[0]);
-    }
-  };
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const getCollectionByType = (type: string) => {
     switch(type) {
@@ -50,22 +41,13 @@ const ManageTeam = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsUploading(true);
+    setIsSubmitting(true);
     
     try {
-      let imageUrl = formData.image;
-      
-      if (imageFile) {
-        const storageRef = ref(storage, `team/${Date.now()}_${imageFile.name}`);
-        await uploadBytes(storageRef, imageFile);
-        imageUrl = await getDownloadURL(storageRef);
-      }
-      
       const collectionName = getCollectionByType(formData.type);
       
       await addDoc(collection(db, collectionName), {
         ...formData,
-        image: imageUrl,
         publications: parseInt(formData.publications)
       });
       
@@ -73,13 +55,11 @@ const ManageTeam = () => {
         name: '',
         role: '',
         bio: '',
-        image: '',
         email: '',
         publications: '0',
         website: '',
         type: 'student'
       });
-      setImageFile(null);
       
       toast({
         title: "Success",
@@ -92,7 +72,7 @@ const ManageTeam = () => {
         variant: "destructive",
       });
     } finally {
-      setIsUploading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -166,26 +146,6 @@ const ManageTeam = () => {
         </div>
         
         <div>
-          <Label htmlFor="image">Profile Image</Label>
-          <Input
-            id="image"
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
-        </div>
-        
-        {!imageFile && (
-          <div>
-            <Input
-              placeholder="Image URL (if not uploading)"
-              value={formData.image}
-              onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-            />
-          </div>
-        )}
-        
-        <div>
           <Input
             type="email"
             placeholder="Email"
@@ -213,8 +173,8 @@ const ManageTeam = () => {
           />
         </div>
         
-        <Button type="submit" disabled={isUploading}>
-          {isUploading ? "Uploading..." : "Add Team Member"}
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Uploading..." : "Add Team Member"}
         </Button>
       </form>
 
