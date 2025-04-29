@@ -111,7 +111,7 @@ const ManageGallery = () => {
           placeholder="Image Title"
           value={formData.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-          required
+        
         />
         <Textarea
           placeholder="Image Description (Optional)"

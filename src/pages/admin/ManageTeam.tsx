@@ -112,7 +112,7 @@ const ManageTeam = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="student">Student</SelectItem>
-              <SelectItem value="faculty">Faculty</SelectItem>
+              <SelectItem value="faculty">Interns</SelectItem>
               <SelectItem value="researcher">Researcher</SelectItem>
             </SelectContent>
           </Select>
@@ -180,9 +180,9 @@ const ManageTeam = () => {
 
       {/* Team Members Lists */}
       <div className="space-y-8">
-        {/* Faculty List */}
+        {/* Interns List */}
         <div>
-          <h3 className="text-xl font-semibold mb-4">Faculty Members</h3>
+          <h3 className="text-xl font-semibold mb-4">Interns</h3>
           <Table>
             <TableHeader>
               <TableRow>
