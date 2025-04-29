@@ -28,5 +28,6 @@ export const researchersCollection = 'researchers';
 export const publicationsCollection = 'publications';
 export const projectsCollection = 'projects';
 export const eventsCollection = 'events';
-export const messagesCollection = 'messages'; // Add this new collection
+export const messagesCollection = 'messages';
+export const imagesCollection = 'gallery'; // Add this new collection
 

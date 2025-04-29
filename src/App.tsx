@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +16,7 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import { auth } from "./lib/firebase";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import ViewMessages from "./pages/admin/ViewMessages";
+import ManageGallery from "./pages/admin/ManageGallery";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +57,7 @@ const App = () => (
             <Route path="team" element={<ManageTeam />} />
             <Route path="events" element={<ManageEvents />} />
             <Route path="messages" element={<ViewMessages />} />
+            <Route path="gallery" element={<ManageGallery />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
