@@ -4,7 +4,7 @@ import { SidebarProvider, Sidebar, SidebarContent, SidebarMenu, SidebarMenuItem,
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useNavigate } from 'react-router-dom';
-import { FileText, User, Calendar, FolderOpen, MessageSquare } from 'lucide-react';
+import { FileText, User, Calendar, FolderOpen, MessageSquare, Image } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const AdminLayout = () => {
@@ -58,6 +58,14 @@ const AdminLayout = () => {
                   <div className="flex items-center">
                     <MessageSquare className="mr-2" />
                     <span>Messages</span>
+                  </div>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild onClick={() => navigate('/admin/gallery')}>
+                  <div className="flex items-center">
+                    <Image className="mr-2" />
+                    <span>Gallery</span>
                   </div>
                 </SidebarMenuButton>
               </SidebarMenuItem>
