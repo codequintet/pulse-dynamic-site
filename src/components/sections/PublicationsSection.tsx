@@ -45,7 +45,7 @@ const PublicationsSection = () => {
             </p>
           </div>
           <Button variant="outline" asChild className="flex items-center gap-2">
-            <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://scholar.google.co.in/citations?user=AgLr5dcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
               Google Scholar <ExternalLink className="h-4 w-4" />
             </a>
           </Button>
