@@ -6,9 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Toaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { auth } from "./lib/firebase"
-import { useAuthState } from 'react-firebase-hooks/auth'
 import { Loader2 } from 'lucide-react'
 
 // Lazy load components
@@ -30,11 +28,9 @@ createRoot(document.getElementById("root")!).render(
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Suspense fallback={<Loading />}>
-          <App />
-        </Suspense>
-      </BrowserRouter>
+      <Suspense fallback={<Loading />}>
+        <App />
+      </Suspense>
     </TooltipProvider>
   </QueryClientProvider>
 )

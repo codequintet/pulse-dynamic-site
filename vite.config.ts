@@ -24,12 +24,17 @@ export default defineConfig(({ mode }) => ({
   },
   optimizeDeps: {
     // Includes Firebase in the pre-bundling process
-    include: ['firebase/app', 'firebase/firestore', 'firebase/auth', 'firebase/storage']
+    include: [
+      'firebase/app', 
+      'firebase/firestore', 
+      'firebase/auth', 
+      'firebase/storage',
+      'react-firebase-hooks/auth'
+    ]
   },
   build: {
     chunkSizeWarningLimit: 800, // Increased from default 500kb
     rollupOptions: {
-      external: ['firebase'],
       output: {
         manualChunks: {
           // Split vendor code into separate chunks
