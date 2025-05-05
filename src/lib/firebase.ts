@@ -1,4 +1,5 @@
 
+// Import Firebase modules individually (not the whole package)
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';

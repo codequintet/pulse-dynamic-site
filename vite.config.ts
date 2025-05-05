@@ -29,11 +29,12 @@ export default defineConfig(({ mode }) => ({
   build: {
     chunkSizeWarningLimit: 800, // Increased from default 500kb
     rollupOptions: {
+      external: ['firebase'],
       output: {
         manualChunks: {
           // Split vendor code into separate chunks
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'firebase-vendor': ['firebase', 'react-firebase-hooks'],
+          'firebase-vendor': ['react-firebase-hooks'],
           'ui-vendor': [
             '@radix-ui/react-accordion',
             '@radix-ui/react-alert-dialog',
