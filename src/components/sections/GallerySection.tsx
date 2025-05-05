@@ -4,6 +4,7 @@ import { useFirebaseData } from '@/hooks/useFirebaseData';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { imagesCollection } from '@/lib/firebase';
+import { Loader2, Image as ImageIcon } from 'lucide-react';
 
 interface GalleryImage {
   id: string;
@@ -16,13 +17,25 @@ const GallerySection = () => {
   const { data: images, loading, error } = useFirebaseData<GalleryImage>(imagesCollection);
 
   if (loading) {
-    return <div className="container-custom py-8 text-center">Loading gallery...</div>;
+    return (
+      <section className="bg-secondary py-12">
+        <div className="container-custom">
+          <h2 className="section-heading text-center mb-8">Gallery</h2>
+          <div className="flex items-center justify-center p-12">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <span className="ml-2">Loading gallery...</span>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   if (error) {
-    return <div className="container-custom py-8 text-center">Error loading gallery: {error.message}</div>;
+    console.error("Error loading gallery:", error);
+    return null; // Hide section on error
   }
 
+  // Don't show the gallery section if there are no images
   if (images.length === 0) {
     return null;
   }
@@ -41,6 +54,11 @@ const GallerySection = () => {
                     src={image.url} 
                     alt={image.title} 
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    loading="lazy"
+                    onError={(e) => {
+                      // Fallback for image loading errors
+                      e.currentTarget.src = '/placeholder.svg';
+                    }}
                   />
                 </div>
                 <div className="mt-2 text-center">
