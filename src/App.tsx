@@ -2,7 +2,6 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -17,8 +16,6 @@ import { auth } from "./lib/firebase";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import ViewMessages from "./pages/admin/ViewMessages";
 import ManageGallery from "./pages/admin/ManageGallery";
-
-const queryClient = new QueryClient();
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const [user, loading] = useAuthState(auth);
@@ -35,35 +32,33 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
+  <BrowserRouter>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <AdminLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<AdminDashboard />} />
-            <Route path="projects" element={<ManageProjects />} />
-            <Route path="publications" element={<ManagePublications />} />
-            <Route path="team" element={<ManageTeam />} />
-            <Route path="events" element={<ManageEvents />} />
-            <Route path="messages" element={<ViewMessages />} />
-            <Route path="gallery" element={<ManageGallery />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="projects" element={<ManageProjects />} />
+          <Route path="publications" element={<ManagePublications />} />
+          <Route path="team" element={<ManageTeam />} />
+          <Route path="events" element={<ManageEvents />} />
+          <Route path="messages" element={<ViewMessages />} />
+          <Route path="gallery" element={<ManageGallery />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </TooltipProvider>
-  </QueryClientProvider>
+  </BrowserRouter>
 );
 
 export default App;

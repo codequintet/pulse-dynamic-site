@@ -25,12 +25,8 @@ const queryClient = new QueryClient()
 // Render with Suspense for code-splitting
 createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
       <Suspense fallback={<Loading />}>
         <App />
       </Suspense>
-    </TooltipProvider>
   </QueryClientProvider>
 )

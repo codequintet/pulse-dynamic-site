@@ -19,18 +19,23 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-    // Add the mainFields configuration to properly handle Firebase
-    mainFields: ['browser', 'module', 'main']
+    // Add the mainFields configuration to properly handle Firebase and react-firebase-hooks
+    mainFields: ['browser', 'module', 'main', 'jsnext:main']
   },
   optimizeDeps: {
-    // Includes Firebase in the pre-bundling process
+    // Includes Firebase and related packages in the pre-bundling process
     include: [
       'firebase/app', 
       'firebase/firestore', 
       'firebase/auth', 
       'firebase/storage',
-      'react-firebase-hooks/auth'
-    ]
+    ],
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: 'globalThis'
+      },
+    }
   },
   build: {
     chunkSizeWarningLimit: 800, // Increased from default 500kb
@@ -39,7 +44,7 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           // Split vendor code into separate chunks
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'firebase-vendor': ['react-firebase-hooks'],
+          'firebase-vendor': ['firebase/app', 'firebase/firestore', 'firebase/auth', 'firebase/storage'],
           'ui-vendor': [
             '@radix-ui/react-accordion',
             '@radix-ui/react-alert-dialog',
