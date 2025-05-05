@@ -19,6 +19,12 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    // Add the mainFields configuration to properly handle Firebase
+    mainFields: ['browser', 'module', 'main']
+  },
+  optimizeDeps: {
+    // Includes Firebase in the pre-bundling process
+    include: ['firebase/app', 'firebase/firestore', 'firebase/auth', 'firebase/storage']
   },
   build: {
     chunkSizeWarningLimit: 800, // Increased from default 500kb

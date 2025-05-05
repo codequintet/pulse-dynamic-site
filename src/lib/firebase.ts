@@ -1,6 +1,6 @@
 
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, collection } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
@@ -21,7 +21,7 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
 
-// Collection references
+// Collection references - these are string identifiers
 export const studentsCollection = 'students';
 export const facultyCollection = 'faculty';
 export const researchersCollection = 'researchers';
@@ -29,5 +29,4 @@ export const publicationsCollection = 'publications';
 export const projectsCollection = 'projects';
 export const eventsCollection = 'events';
 export const messagesCollection = 'messages';
-export const imagesCollection = 'gallery'; // Add this new collection
-
+export const imagesCollection = 'gallery';
