@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useFirebaseData } from '@/hooks/useFirebaseData';
-import { studentsCollection, facultyCollection, researchersCollection, db } from '@/lib/firebase';
+import { btechStudentsCollection, mtechStudentsCollection, facultyCollection, researchersCollection, db } from '@/lib/firebase';
 import { collection, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,7 +13,8 @@ import { Trash } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const ManageTeam = () => {
-  const { data: students } = useFirebaseData<TeamMember>(studentsCollection);
+  const { data: btechStudents } = useFirebaseData<TeamMember>(btechStudentsCollection);
+  const { data: mtechStudents } = useFirebaseData<TeamMember>(mtechStudentsCollection);
   const { data: faculty } = useFirebaseData<TeamMember>(facultyCollection);
   const { data: researchers } = useFirebaseData<TeamMember>(researchersCollection);
   const { toast } = useToast();
@@ -24,7 +25,7 @@ const ManageTeam = () => {
     email: '',
     publications: '0',
     website: '',
-    type: 'student'
+    type: 'btech_student'
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -34,8 +35,10 @@ const ManageTeam = () => {
         return facultyCollection;
       case 'researcher':
         return researchersCollection;
+      case 'mtech_student':
+        return mtechStudentsCollection;
       default:
-        return studentsCollection;
+        return btechStudentsCollection;
     }
   };
 
@@ -58,7 +61,7 @@ const ManageTeam = () => {
         email: '',
         publications: '0',
         website: '',
-        type: 'student'
+        type: 'btech_student'
       });
       
       toast({
@@ -111,7 +114,8 @@ const ManageTeam = () => {
               <SelectValue placeholder="Select team type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="student">Student</SelectItem>
+              <SelectItem value="btech_student">BTech Student</SelectItem>
+              <SelectItem value="mtech_student">MTech Student</SelectItem>
               <SelectItem value="faculty">Interns</SelectItem>
               <SelectItem value="researcher">Researcher</SelectItem>
             </SelectContent>
@@ -180,52 +184,6 @@ const ManageTeam = () => {
 
       {/* Team Members Lists */}
       <div className="space-y-8">
-        {/* Interns List */}
-        <div>
-          <h3 className="text-xl font-semibold mb-4">Interns</h3>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Image</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {faculty.map((member) => (
-                <TableRow key={member.id}>
-                  <TableCell>
-                    {member.image && (
-                      <div className="h-12 w-12 rounded-full overflow-hidden">
-                        <img 
-                          src={member.image} 
-                          alt={member.name} 
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                    )}
-                  </TableCell>
-                  <TableCell className="font-medium">{member.name}</TableCell>
-                  <TableCell>{member.role}</TableCell>
-                  <TableCell>{member.email}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => handleDelete(member.id, 'faculty')}
-                    >
-                      <Trash className="h-4 w-4" />
-                      Delete
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-
         {/* Researchers List */}
         <div>
           <h3 className="text-xl font-semibold mb-4">Researchers</h3>
@@ -272,9 +230,9 @@ const ManageTeam = () => {
           </Table>
         </div>
 
-        {/* Students List */}
+        {/* BTech Students List */}
         <div>
-          <h3 className="text-xl font-semibold mb-4">Students</h3>
+          <h3 className="text-xl font-semibold mb-4">BTech Students</h3>
           <Table>
             <TableHeader>
               <TableRow>
@@ -286,7 +244,7 @@ const ManageTeam = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {students.map((member) => (
+              {btechStudents.map((member) => (
                 <TableRow key={member.id}>
                   <TableCell>
                     {member.image && (
@@ -306,7 +264,99 @@ const ManageTeam = () => {
                     <Button
                       variant="destructive"
                       size="sm"
-                      onClick={() => handleDelete(member.id, 'student')}
+                      onClick={() => handleDelete(member.id, 'btech_student')}
+                    >
+                      <Trash className="h-4 w-4" />
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+
+        {/* MTech Students List */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">MTech Students</h3>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Image</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {mtechStudents.map((member) => (
+                <TableRow key={member.id}>
+                  <TableCell>
+                    {member.image && (
+                      <div className="h-12 w-12 rounded-full overflow-hidden">
+                        <img 
+                          src={member.image} 
+                          alt={member.name} 
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell className="font-medium">{member.name}</TableCell>
+                  <TableCell>{member.role}</TableCell>
+                  <TableCell>{member.email}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => handleDelete(member.id, 'mtech_student')}
+                    >
+                      <Trash className="h-4 w-4" />
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+
+        {/* Interns List */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">Interns</h3>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Image</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {faculty.map((member) => (
+                <TableRow key={member.id}>
+                  <TableCell>
+                    {member.image && (
+                      <div className="h-12 w-12 rounded-full overflow-hidden">
+                        <img 
+                          src={member.image} 
+                          alt={member.name} 
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell className="font-medium">{member.name}</TableCell>
+                  <TableCell>{member.role}</TableCell>
+                  <TableCell>{member.email}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => handleDelete(member.id, 'faculty')}
                     >
                       <Trash className="h-4 w-4" />
                       Delete

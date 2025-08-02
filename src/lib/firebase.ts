@@ -23,7 +23,8 @@ export const auth = getAuth(app);
 export const storage = getStorage(app);
 
 // Collection references - these are string identifiers
-export const studentsCollection = 'students';
+export const btechStudentsCollection = 'btech_students';
+export const mtechStudentsCollection = 'mtech_students';
 export const facultyCollection = 'faculty';
 export const researchersCollection = 'researchers';
 export const publicationsCollection = 'publications';

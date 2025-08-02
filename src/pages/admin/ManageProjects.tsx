@@ -87,10 +87,9 @@ const ManageProjects = () => {
           required
         />
         <Input
-          placeholder="Image URL"
+          placeholder="Image URL (optional)"
           value={formData.image}
           onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-          required
         />
         <Input
           placeholder="Categories (comma-separated)"
@@ -99,10 +98,9 @@ const ManageProjects = () => {
           required
         />
         <Input
-          placeholder="Project Link"
+          placeholder="Project Link (optional)"
           value={formData.link}
           onChange={(e) => setFormData({ ...formData, link: e.target.value })}
-          required
         />
         <Button type="submit">Add Project</Button>
       </form>

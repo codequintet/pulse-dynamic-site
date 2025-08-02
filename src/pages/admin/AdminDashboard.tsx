@@ -5,14 +5,23 @@ import {
   projectsCollection, 
   publicationsCollection,
   eventsCollection,
-  studentsCollection
+  btechStudentsCollection,
+  mtechStudentsCollection,
+  facultyCollection,
+  researchersCollection
 } from '@/lib/firebase';
 
 const AdminDashboard = () => {
   const { data: projects, loading: projectsLoading } = useFirebaseData(projectsCollection);
   const { data: publications, loading: publicationsLoading } = useFirebaseData(publicationsCollection);
   const { data: events, loading: eventsLoading } = useFirebaseData(eventsCollection);
-  const { data: students, loading: studentsLoading } = useFirebaseData(studentsCollection);
+  const { data: btechStudents, loading: btechLoading } = useFirebaseData(btechStudentsCollection);
+  const { data: mtechStudents, loading: mtechLoading } = useFirebaseData(mtechStudentsCollection);
+  const { data: faculty, loading: facultyLoading } = useFirebaseData(facultyCollection);
+  const { data: researchers, loading: researchersLoading } = useFirebaseData(researchersCollection);
+
+  const totalTeamMembers = btechStudents.length + mtechStudents.length + faculty.length + researchers.length;
+  const teamLoading = btechLoading || mtechLoading || facultyLoading || researchersLoading;
 
   return (
     <div className="space-y-6">
@@ -50,7 +59,7 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-bold">
-              {studentsLoading ? "..." : students.length}
+              {teamLoading ? "..." : totalTeamMembers}
             </p>
             <p className="text-sm text-muted-foreground">Total team members</p>
           </CardContent>
