@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Toaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { auth } from "./lib/firebase"
+// Supabase will be handled by native integration
 import { Loader2 } from 'lucide-react'
 
 // Lazy load components

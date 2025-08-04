@@ -1,79 +1,44 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useFirebaseData } from '@/hooks/useFirebaseData';
-import { 
-  projectsCollection, 
-  publicationsCollection,
-  eventsCollection,
-  btechStudentsCollection,
-  mtechStudentsCollection,
-  facultyCollection,
-  researchersCollection
-} from '@/lib/firebase';
 
 const AdminDashboard = () => {
-  const { data: projects, loading: projectsLoading } = useFirebaseData(projectsCollection);
-  const { data: publications, loading: publicationsLoading } = useFirebaseData(publicationsCollection);
-  const { data: events, loading: eventsLoading } = useFirebaseData(eventsCollection);
-  const { data: btechStudents, loading: btechLoading } = useFirebaseData(btechStudentsCollection);
-  const { data: mtechStudents, loading: mtechLoading } = useFirebaseData(mtechStudentsCollection);
-  const { data: faculty, loading: facultyLoading } = useFirebaseData(facultyCollection);
-  const { data: researchers, loading: researchersLoading } = useFirebaseData(researchersCollection);
-
-  const totalTeamMembers = btechStudents.length + mtechStudents.length + faculty.length + researchers.length;
-  const teamLoading = btechLoading || mtechLoading || facultyLoading || researchersLoading;
-
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold">Admin Dashboard</h2>
-      <p className="text-gray-600">Manage your website content from this dashboard.</p>
+      <h1 className="text-3xl font-bold">Dashboard</h1>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Projects</CardTitle>
+          <CardHeader>
+            <CardTitle>Projects</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">
-              {projectsLoading ? "..." : projects.length}
-            </p>
-            <p className="text-sm text-muted-foreground">Total projects</p>
+            <p className="text-2xl font-bold">3</p>
           </CardContent>
         </Card>
         
         <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Publications</CardTitle>
+          <CardHeader>
+            <CardTitle>Publications</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">
-              {publicationsLoading ? "..." : publications.length}
-            </p>
-            <p className="text-sm text-muted-foreground">Total publications</p>
+            <p className="text-2xl font-bold">2</p>
           </CardContent>
         </Card>
         
         <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Team Members</CardTitle>
+          <CardHeader>
+            <CardTitle>Team Members</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">
-              {teamLoading ? "..." : totalTeamMembers}
-            </p>
-            <p className="text-sm text-muted-foreground">Total team members</p>
+            <p className="text-2xl font-bold">4</p>
           </CardContent>
         </Card>
         
         <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Events</CardTitle>
+          <CardHeader>
+            <CardTitle>Events</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">
-              {eventsLoading ? "..." : events.length}
-            </p>
-            <p className="text-sm text-muted-foreground">Total events</p>
+            <p className="text-2xl font-bold">2</p>
           </CardContent>
         </Card>
       </div>

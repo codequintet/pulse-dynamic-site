@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useFirebaseData } from "@/hooks/useFirebaseData";
-import { projectsCollection } from "@/lib/firebase";
 
 interface Project {
   id: string;
@@ -16,7 +14,37 @@ interface Project {
 
 const ProjectsSection = () => {
   const [activeFilter, setActiveFilter] = useState<string>("All");
-  const { data: projects, loading, error } = useFirebaseData<Project>(projectsCollection);
+  
+  // Mock data for now - you can replace this with actual Supabase queries when tables are set up
+  const projects: Project[] = [
+    {
+      id: '1',
+      title: 'AI Research Project',
+      description: 'Exploring machine learning applications in data analysis',
+      image: '/placeholder.svg',
+      categories: ['AI', 'Research'],
+      link: '#'
+    },
+    {
+      id: '2',
+      title: 'Quantum Computing Study',
+      description: 'Investigating quantum algorithms for optimization problems',
+      image: '/placeholder.svg',
+      categories: ['Quantum', 'Computing'],
+      link: '#'
+    },
+    {
+      id: '3',
+      title: 'Biomedical Engineering',
+      description: 'Developing innovative medical devices and treatments',
+      image: '/placeholder.svg',
+      categories: ['Biomedical', 'Engineering'],
+      link: '#'
+    }
+  ];
+  
+  const loading = false;
+  const error = null;
 
   if (loading) {
     return <div className="text-center py-10">Loading projects...</div>;

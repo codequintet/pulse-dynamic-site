@@ -2,12 +2,33 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, ExternalLink } from 'lucide-react';
-import { useFirebaseData } from '@/hooks/useFirebaseData';
-import { publicationsCollection } from '@/lib/firebase';
 import type { Publication } from '@/types';
 
 const PublicationsSection = () => {
-  const { data: publications, loading, error } = useFirebaseData<Publication>(publicationsCollection);
+  // Mock data for now - will be replaced with Supabase queries
+  const publications: Publication[] = [
+    {
+      id: '1',
+      title: 'Advanced Machine Learning Techniques in Data Analysis',
+      authors: 'Dr. Smith, Dr. Johnson, Dr. Brown',
+      journal: 'Journal of Computer Science',
+      year: 2024,
+      link: '#',
+      citationCount: 45
+    },
+    {
+      id: '2',
+      title: 'Quantum Computing Applications in Optimization',
+      authors: 'Dr. Wilson, Dr. Davis',
+      journal: 'Nature Quantum Information',
+      year: 2023,
+      link: '#',
+      citationCount: 67
+    }
+  ];
+  
+  const loading = false;
+  const error = null;
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("year");
   const [sortOrder, setSortOrder] = useState("desc");

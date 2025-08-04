@@ -3,16 +3,63 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Mail, FileText } from 'lucide-react';
-import { useFirebaseData } from '@/hooks/useFirebaseData';
-import { btechStudentsCollection, mtechStudentsCollection, facultyCollection, researchersCollection } from '@/lib/firebase';
 import { TeamMember } from '@/types';
 
 const TeamSection = () => {
   const [activeTab, setActiveTab] = useState("researchers");
-  const { data: btechStudentsData, loading: btechStudentsLoading } = useFirebaseData<TeamMember>(btechStudentsCollection);
-  const { data: mtechStudentsData, loading: mtechStudentsLoading } = useFirebaseData<TeamMember>(mtechStudentsCollection);
-  const { data: facultyData, loading: facultyLoading } = useFirebaseData<TeamMember>(facultyCollection);
-  const { data: researchersData, loading: researchersLoading } = useFirebaseData<TeamMember>(researchersCollection);
+  
+  // Mock data for now - will be replaced with Supabase queries
+  const researchersData: TeamMember[] = [
+    {
+      id: '1',
+      name: 'Dr. Jane Smith',
+      role: 'Principal Researcher',
+      bio: 'Leading expert in artificial intelligence and machine learning',
+      image: '/placeholder.svg',
+      email: 'jane.smith@university.edu',
+      publications: 45,
+      website: '#'
+    }
+  ];
+  
+  const facultyData: TeamMember[] = [
+    {
+      id: '2',
+      name: 'Prof. John Wilson',
+      role: 'Professor',
+      bio: 'Quantum computing and algorithms specialist',
+      image: '/placeholder.svg',
+      email: 'john.wilson@university.edu',
+      publications: 78,
+      website: '#'
+    }
+  ];
+  
+  const mtechStudentsData: TeamMember[] = [
+    {
+      id: '3',
+      name: 'Sarah Johnson',
+      role: 'M.Tech Student',
+      bio: 'Researching natural language processing',
+      image: '/placeholder.svg',
+      email: 'sarah.johnson@student.university.edu',
+      publications: 3,
+      website: '#'
+    }
+  ];
+  
+  const btechStudentsData: TeamMember[] = [
+    {
+      id: '4',
+      name: 'Mike Brown',
+      role: 'B.Tech Student',
+      bio: 'Undergraduate researcher in computer vision',
+      image: '/placeholder.svg',
+      email: 'mike.brown@student.university.edu',
+      publications: 1,
+      website: '#'
+    }
+  ];
   
   return (
     <section id="team" className="section-padding bg-background">
@@ -44,11 +91,7 @@ const TeamSection = () => {
           
           {/* Researchers Tab */}
           <TabsContent value="researchers">
-            {researchersLoading ? (
-              <div className="text-center py-16">
-                <div className="animate-pulse text-muted-foreground">Loading researchers...</div>
-              </div>
-            ) : researchersData.length === 0 ? (
+            {researchersData.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-muted-foreground">No researchers found</p>
               </div>
@@ -63,11 +106,7 @@ const TeamSection = () => {
 
           {/* BTech Students Tab */}
           <TabsContent value="btech">
-            {btechStudentsLoading ? (
-              <div className="text-center py-16">
-                <div className="animate-pulse text-muted-foreground">Loading BTech students...</div>
-              </div>
-            ) : btechStudentsData.length === 0 ? (
+            {btechStudentsData.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-muted-foreground">No BTech students found</p>
               </div>
@@ -82,11 +121,7 @@ const TeamSection = () => {
 
           {/* MTech Students Tab */}
           <TabsContent value="mtech">
-            {mtechStudentsLoading ? (
-              <div className="text-center py-16">
-                <div className="animate-pulse text-muted-foreground">Loading MTech students...</div>
-              </div>
-            ) : mtechStudentsData.length === 0 ? (
+            {mtechStudentsData.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-muted-foreground">No MTech students found</p>
               </div>
@@ -101,11 +136,7 @@ const TeamSection = () => {
           
           {/* Faculty/Interns Tab */}
           <TabsContent value="faculty">
-            {facultyLoading ? (
-              <div className="text-center py-16">
-                <div className="animate-pulse text-muted-foreground">Loading interns...</div>
-              </div>
-            ) : facultyData.length === 0 ? (
+            {facultyData.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-muted-foreground">No interns found</p>
               </div>

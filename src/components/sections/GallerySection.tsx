@@ -1,9 +1,7 @@
 
 import { useState, useEffect } from 'react';
-import { useFirebaseData } from '@/hooks/useFirebaseData';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { imagesCollection } from '@/lib/firebase';
 import { Loader2, Image as ImageIcon } from 'lucide-react';
 
 interface GalleryImage {
@@ -14,7 +12,30 @@ interface GalleryImage {
 }
 
 const GallerySection = () => {
-  const { data: images, loading, error } = useFirebaseData<GalleryImage>(imagesCollection);
+  // Mock data for now - will be replaced with Supabase queries
+  const images: GalleryImage[] = [
+    {
+      id: '1',
+      url: '/placeholder.svg',
+      title: 'Research Lab',
+      description: 'Our state-of-the-art research laboratory'
+    },
+    {
+      id: '2',
+      url: '/placeholder.svg',
+      title: 'Team Meeting',
+      description: 'Weekly team collaboration session'
+    },
+    {
+      id: '3',
+      url: '/placeholder.svg',
+      title: 'Conference Presentation',
+      description: 'Presenting our latest findings'
+    }
+  ];
+  
+  const loading = false;
+  const error = null;
 
   if (loading) {
     return (

@@ -1,87 +1,52 @@
-
-import { Outlet } from 'react-router-dom';
-import { SidebarProvider, Sidebar, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
-import { signOut } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
-import { useNavigate } from 'react-router-dom';
-import { FileText, User, Calendar, FolderOpen, MessageSquare, Image } from 'lucide-react';
+import { Outlet, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const AdminLayout = () => {
-  const navigate = useNavigate();
-
-  const handleSignOut = async () => {
-    await signOut(auth);
-    navigate('/admin/login');
-  };
+  const location = useLocation();
+  
+  const navigation = [
+    { name: 'Dashboard', href: '/admin', icon: '📊' },
+    { name: 'Projects', href: '/admin/projects', icon: '🔬' },
+    { name: 'Publications', href: '/admin/publications', icon: '📄' },
+    { name: 'Team', href: '/admin/team', icon: '👥' },
+    { name: 'Events', href: '/admin/events', icon: '📅' },
+    { name: 'Gallery', href: '/admin/gallery', icon: '🖼️' },
+    { name: 'Messages', href: '/admin/messages', icon: '📧' },
+  ];
 
   return (
-    <SidebarProvider>
-      <div className="flex min-h-screen w-full">
-        <Sidebar>
-          <SidebarContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild onClick={() => navigate('/admin/projects')}>
-                  <div className="flex items-center">
-                    <FolderOpen className="mr-2" />
-                    <span>Projects</span>
-                  </div>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild onClick={() => navigate('/admin/publications')}>
-                  <div className="flex items-center">
-                    <FileText className="mr-2" />
-                    <span>Publications</span>
-                  </div>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild onClick={() => navigate('/admin/team')}>
-                  <div className="flex items-center">
-                    <User className="mr-2" />
-                    <span>Team</span>
-                  </div>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild onClick={() => navigate('/admin/events')}>
-                  <div className="flex items-center">
-                    <Calendar className="mr-2" />
-                    <span>Events</span>
-                  </div>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild onClick={() => navigate('/admin/messages')}>
-                  <div className="flex items-center">
-                    <MessageSquare className="mr-2" />
-                    <span>Messages</span>
-                  </div>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild onClick={() => navigate('/admin/gallery')}>
-                  <div className="flex items-center">
-                    <Image className="mr-2" />
-                    <span>Gallery</span>
-                  </div>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-            <div className="mt-auto p-4">
-              <Button onClick={handleSignOut} variant="outline" className="w-full">
-                Sign Out
-              </Button>
-            </div>
-          </SidebarContent>
-        </Sidebar>
-        <main className="flex-1 p-6">
-          <Outlet />
-        </main>
+    <div className="min-h-screen bg-background">
+      <div className="flex h-screen">
+        <div className="w-64 bg-card border-r">
+          <div className="p-6">
+            <h2 className="text-xl font-bold">Admin Panel</h2>
+          </div>
+          <nav className="px-4 space-y-2">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={cn(
+                  "flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors",
+                  location.pathname === item.href
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                )}
+              >
+                <span className="mr-3">{item.icon}</span>
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+        </div>
+        <div className="flex-1 overflow-auto">
+          <div className="p-8">
+            <Outlet />
+          </div>
+        </div>
       </div>
-    </SidebarProvider>
+    </div>
   );
 };
 

@@ -5,12 +5,35 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, MapPin } from 'lucide-react';
-import { useFirebaseData } from '@/hooks/useFirebaseData';
-import { eventsCollection } from '@/lib/firebase';
 import type { Event } from '@/types';
 
 const EventsSection = () => {
-  const { data: events, loading, error } = useFirebaseData<Event>(eventsCollection);
+  // Mock data for now - will be replaced with Supabase queries
+  const events: Event[] = [
+    {
+      id: '1',
+      title: 'AI Research Symposium',
+      date: '2024-09-15',
+      time: '10:00 AM',
+      location: 'Main Auditorium',
+      description: 'Annual symposium on artificial intelligence research',
+      type: 'Conference',
+      registrationLink: '#'
+    },
+    {
+      id: '2',
+      title: 'Workshop on Machine Learning',
+      date: '2024-08-20',
+      time: '2:00 PM',
+      location: 'Lab 101',
+      description: 'Hands-on workshop covering latest ML techniques',
+      type: 'Workshop',
+      recordingLink: '#'
+    }
+  ];
+  
+  const loading = false;
+  const error = null;
   const [activeTab, setActiveTab] = useState("upcoming");
   
   // Split events into upcoming and past

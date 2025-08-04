@@ -1,8 +1,7 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -12,22 +11,11 @@ import ManagePublications from "./pages/admin/ManagePublications";
 import ManageTeam from "./pages/admin/ManageTeam";
 import ManageEvents from "./pages/admin/ManageEvents";
 import AdminLogin from "./pages/admin/AdminLogin";
-import { auth } from "./lib/firebase";
-import { useAuthState } from 'react-firebase-hooks/auth';
 import ViewMessages from "./pages/admin/ViewMessages";
 import ManageGallery from "./pages/admin/ManageGallery";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const [user, loading] = useAuthState(auth);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user) {
-    return <Navigate to="/admin/login" />;
-  }
-
+  // For now, allow access - will be properly implemented with Supabase auth
   return <>{children}</>;
 };
 
