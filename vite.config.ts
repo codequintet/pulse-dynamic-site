@@ -23,13 +23,6 @@ export default defineConfig(({ mode }) => ({
     mainFields: ['browser', 'module', 'main', 'jsnext:main']
   },
   optimizeDeps: {
-    // Includes Firebase and related packages in the pre-bundling process
-    include: [
-      'firebase/app', 
-      'firebase/firestore', 
-      'firebase/auth', 
-      'firebase/storage',
-    ],
     esbuildOptions: {
       // Node.js global to browser globalThis
       define: {
@@ -44,7 +37,6 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           // Split vendor code into separate chunks
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'firebase-vendor': ['firebase/app', 'firebase/firestore', 'firebase/auth', 'firebase/storage'],
           'ui-vendor': [
             '@radix-ui/react-accordion',
             '@radix-ui/react-alert-dialog',
