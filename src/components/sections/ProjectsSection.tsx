@@ -2,21 +2,38 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  categories: string[];
-  link: string;
-}
+import { useProjects } from "@/hooks/useSupabaseData";
+import { ExternalLink, Github } from "lucide-react";
 
 const ProjectsSection = () => {
   const [activeFilter, setActiveFilter] = useState<string>("All");
+  const { data: projects, isLoading, error } = useProjects();
   
-  // Mock data for now - you can replace this with actual Supabase queries when tables are set up
-  const projects: Project[] = [
+  if (isLoading) {
+    return (
+      <section id="projects" className="section-padding bg-muted">
+        <div className="container-custom">
+          <h2 className="section-heading text-center">Our Research Projects</h2>
+          <div className="text-center py-10">Loading projects...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section id="projects" className="section-padding bg-muted">
+        <div className="container-custom">
+          <h2 className="section-heading text-center">Our Research Projects</h2>
+          <div className="text-center py-10 text-muted-foreground">
+            {!projects || projects.length === 0 ? "No projects available yet." : "Error loading projects."}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const mockProjects = [
     {
       id: '1',
       title: 'AI Research Project',
@@ -42,25 +59,36 @@ const ProjectsSection = () => {
       link: '#'
     }
   ];
+
+  // Use real projects if available, fallback to mock data
+  const displayProjects = projects && projects.length > 0 ? projects : mockProjects;
   
-  const loading = false;
-  const error = null;
-
-  if (loading) {
-    return <div className="text-center py-10">Loading projects...</div>;
-  }
-
-  if (error) {
-    return <div className="text-center py-10 text-red-500">Error loading projects: {error.message}</div>;
-  }
+  // Convert Supabase data to match the component interface
+  const formattedProjects = displayProjects.map(project => {
+    if ('tech_stack' in project) {
+      // This is Supabase data
+      return {
+        id: project.id,
+        title: project.title,
+        description: project.description,
+        image: project.image_url,
+        categories: project.tech_stack,
+        link: project.demo_url || project.github_url || '#',
+        github_url: project.github_url,
+        demo_url: project.demo_url
+      };
+    }
+    // This is mock data
+    return project;
+  });
 
   const allCategories = Array.from(
-    new Set(projects.flatMap(project => project.categories))
+    new Set(formattedProjects.flatMap(project => project.categories))
   );
 
   const filteredProjects = activeFilter === "All"
-    ? projects
-    : projects.filter(project => project.categories.includes(activeFilter));
+    ? formattedProjects
+    : formattedProjects.filter(project => project.categories.includes(activeFilter));
   
   return (
     <section id="projects" className="section-padding bg-muted">
@@ -113,10 +141,28 @@ const ProjectsSection = () => {
               <CardContent className="flex-grow">
                 <p className="text-muted-foreground">{project.description}</p>
               </CardContent>
-              <CardFooter>
-                <Button asChild variant="link" className="p-0">
-                  <a href={project.link}>Learn More</a>
-                </Button>
+              <CardFooter className="flex gap-2">
+                {project.github_url && (
+                  <Button variant="outline" size="sm" asChild>
+                    <a href={project.github_url} target="_blank" rel="noopener noreferrer">
+                      <Github className="w-4 h-4 mr-2" />
+                      Code
+                    </a>
+                  </Button>
+                )}
+                {project.demo_url && (
+                  <Button size="sm" asChild>
+                    <a href={project.demo_url} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Demo
+                    </a>
+                  </Button>
+                )}
+                {!project.github_url && !project.demo_url && (
+                  <Button asChild variant="link" className="p-0">
+                    <a href={project.link}>Learn More</a>
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           ))}
